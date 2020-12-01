@@ -17,7 +17,7 @@ public class CustomerService {
     @Autowired
     private ICustomerProcessor customerProcessor;
 
-    @PostMapping(value = "/order", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @PostMapping(value = "test/order", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public CustomerResponse createOrder(@RequestBody CustomerRequest request) {
         return customerProcessor.createOrder(request);
     }
