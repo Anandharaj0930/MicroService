@@ -4,9 +4,7 @@ import com.stock.entity.IStockRepository;
 import com.stock.entity.Stock;
 import com.stock.exception.StockCreateException;
 import com.stock.exception.StockGetException;
-import com.stock.types.GetStockResponse;
-import com.stock.types.StockRequest;
-import com.stock.types.StockResponse;
+import com.stock.types.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -39,14 +37,14 @@ public class StockProcessor implements IStockProcessor {
     @Override
     public GetStockResponse getStockByName(String name) {
         GetStockResponse response = new GetStockResponse();
+        Status status = buildSuccessStatus();
         try {
-           Stock stock = stockRepository.getByStockName(name);
+            Stock stock = stockRepository.getByStockName(name);
             response.setOwner(stock.getOwner());
             response.setPrice(stock.getPrice());
             response.setStockName(stock.getStockName());
             response.setType(stock.getType());
-            response.setStatusCode(String.valueOf(HttpStatus.OK.value()));
-            response.setStatusMsg(HttpStatus.OK.getReasonPhrase());
+            response.setStatus(status);
         } catch (Exception e) {
             throw new StockGetException();
         }
@@ -54,21 +52,25 @@ public class StockProcessor implements IStockProcessor {
     }
 
     @Override
-    public List<GetStockResponse> getAllStock() {
+    public GetAllStockResponse getAllStock() {
+        GetAllStockResponse response = null;
         List<GetStockResponse> responseList = new ArrayList<>();
         try {
-           List<Stock>  stockList = stockRepository.findAll();
+            List<Stock> stockList = stockRepository.findAll();
             stockList.stream().forEach(stock -> {
-                GetStockResponse response = new GetStockResponse();
-                response.setOwner(stock.getOwner());
-                response.setPrice(stock.getPrice());
-                response.setStockName(stock.getStockName());
-                response.setType(stock.getType());
-
+                GetStockResponse res = new GetStockResponse();
+                res.setOwner(stock.getOwner());
+                res.setPrice(stock.getPrice());
+                res.setStockName(stock.getStockName());
+                res.setType(stock.getType());
+                responseList.add(res);
             });
         } catch (Exception e) {
             throw new StockGetException();
         }
+        Status status = buildSuccessStatus();
+        response.setStockList(responseList);
+        response.setStaus(status);
         return response;
     }
 
@@ -77,7 +79,15 @@ public class StockProcessor implements IStockProcessor {
         entity.setOwner(request.getOwner());
         entity.setPrice(request.getPrice());
         entity.setStockName(request.getStockName());
+        entity.setType(request.getType());
         return entity;
+    }
+
+    Status buildSuccessStatus() {
+        Status status = new Status();
+        status.setStatusCode(String.valueOf(HttpStatus.OK.value()));
+        status.setStatusMsg(HttpStatus.OK.getReasonPhrase());
+        return status;
     }
 
 

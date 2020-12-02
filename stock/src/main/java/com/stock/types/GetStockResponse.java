@@ -9,30 +9,7 @@ public class GetStockResponse {
 
     private String type;
 
-    private Data data;
-
-    public class Data {
-        private String statusCode;
-
-        private String statusMsg;
-
-        public String getStatusCode() {
-            return statusCode;
-        }
-
-        public void setStatusCode(String statusCode) {
-            this.statusCode = statusCode;
-        }
-
-        public String getStatusMsg() {
-            return statusMsg;
-        }
-
-        public void setStatusMsg(String statusMsg) {
-            this.statusMsg = statusMsg;
-        }
-    }
-
+    private Status status;
 
     public String getStockName() {
         return stockName;
@@ -66,12 +43,12 @@ public class GetStockResponse {
         this.type = type;
     }
 
-    public Data getData() {
-        return data;
+    public Status getStatus() {
+        return status;
     }
 
-    public void setData(Data data) {
-        this.data = data;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     @Override
@@ -81,7 +58,7 @@ public class GetStockResponse {
                 ", price='" + price + '\'' +
                 ", owner='" + owner + '\'' +
                 ", type='" + type + '\'' +
-                ", data=" + data +
+                ", status=" + status +
                 '}';
     }
 }

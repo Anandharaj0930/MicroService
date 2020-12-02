@@ -1,6 +1,7 @@
 package com.stock.controller;
 
 import com.stock.core.IStockProcessor;
+import com.stock.types.GetAllStockResponse;
 import com.stock.types.GetStockResponse;
 import com.stock.types.StockRequest;
 import com.stock.types.StockResponse;
@@ -29,7 +30,7 @@ public class StockController {
     }
 
     @GetMapping(value = "/all", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public List<GetStockResponse> getAllStock() {
+    public GetAllStockResponse getAllStock() {
         return stockProcessor.getAllStock();
 
     }

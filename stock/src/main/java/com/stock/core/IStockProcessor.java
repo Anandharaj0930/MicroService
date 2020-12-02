@@ -1,5 +1,6 @@
 package com.stock.core;
 
+import com.stock.types.GetAllStockResponse;
 import com.stock.types.GetStockResponse;
 import com.stock.types.StockRequest;
 import com.stock.types.StockResponse;
@@ -11,5 +12,6 @@ public interface IStockProcessor {
     StockResponse createStock(StockRequest request);
 
     GetStockResponse getStockByName(String name);
-    List<GetStockResponse> getAllStock();
+
+    GetAllStockResponse getAllStock();
 }
